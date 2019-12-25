@@ -1,0 +1,64 @@
+{
+	"name": "gridsome-plugin-manifest",
+	"version": "0.1.0",
+	"description": "Generates a manifest and handle icons generation for your PWA.",
+	"main": "gridsome.server.js",
+	"repository": "https://github.com/khalyomede/gridsome-plugin-manifest",
+	"author": "Khalyomede <khalyomede@gmail.com>",
+	"license": "MIT",
+	"private": false,
+	"keywords": [
+		"gridsome-plugin",
+		"pwa",
+		"manifest"
+	],
+	"devDependencies": {
+		"@babel/core": "7.*",
+		"@babel/plugin-transform-runtime": "7.*",
+		"@babel/preset-env": "7.*",
+		"@babel/register": "7.*",
+		"@babel/runtime": "7.*",
+		"@types/cli-color": "0.*",
+		"@types/hapi__joi": "16.*",
+		"@types/mime-types": "2.*",
+		"@types/mkdirp": "0.*",
+		"@types/node": "13.*",
+		"@types/rename": "1.*",
+		"@types/sharp": "0.*",
+		"chai": "4.*",
+		"gulp": "4.*",
+		"gulp-babel": "8.*",
+		"gulp-plumber": "1.*",
+		"gulp-tslint": "8.*",
+		"gulp-typescript": "5.*",
+		"mocha": "6.*",
+		"np": "5.*",
+		"npm-check-updates": "4.*",
+		"nyc": "15.*",
+		"tslint": "5.*",
+		"typescript": "3.*",
+		"yarn": "^1.21.1"
+	},
+	"peerDependencies": {
+		"gridsome": "0.*"
+	},
+	"scripts": {
+		"start": "ncu && gulp build && gulp start",
+		"build": "ncu && gulp build",
+		"test": "nyc mocha --require @babel/register test",
+		"release": "np"
+	},
+	"dependencies": {
+		"@hapi/joi": "16.*",
+		"cli-color": "2.*",
+		"mime-types": "2.*",
+		"mkdirp": "0.*",
+		"rename": "1.*",
+		"sharp": "0.*"
+	},
+	"files": [
+		"error-logger.js",
+		"gridsome.server.js",
+		"gridsome.client.js"
+	]
+}
