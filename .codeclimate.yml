@@ -1,5 +1,5 @@
 exclude_patterns:
-	- "test/"
+  - "test/"
 	- "gulpfile.babel.js"
 	- "gridsome.client.js"
   - "gridsome.server.js"
