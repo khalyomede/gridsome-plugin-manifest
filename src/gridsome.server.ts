@@ -21,6 +21,7 @@ class GridsomePluginManifest {
 					.valid("browser", "standalone", "minimal-ui", "fullscreen"),
 				iconPath: Joi.string().required(),
 				name: Joi.string().required(),
+				fileName: Joi.string().required(),
 				orientation: Joi.string()
 					.required()
 					.valid(
