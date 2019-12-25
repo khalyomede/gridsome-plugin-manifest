@@ -2,6 +2,8 @@
 
 Generates a manifest and handle icons generation for your PWA.
 
+[![npm](https://img.shields.io/npm/v/gridsome-plugin-manifest)](https://www.npmjs.com/package/gridsome-plugin-manifest) [![npm peer dependency version](https://img.shields.io/npm/dependency-version/gridsome-plugin-manifest/peer/gridsome)](https://www.npmjs.com/package/gridsome) [![NPM](https://img.shields.io/npm/l/gridsome-plugin-manifest)](https://github.com/khalyomede/gridsome-plugin-manifest/blob/master/LICENSE) [![Build Status](https://travis-ci.com/khalyomede/gridsome-plugin-manifest.svg?branch=master)](https://travis-ci.com/khalyomede/gridsome-plugin-manifest) ![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/gridsome-plugin-manifest) [![Maintainability](https://api.codeclimate.com/v1/badges/493c9113d81d8444ad82/maintainability)](https://codeclimate.com/github/khalyomede/gridsome-plugin-manifest/maintainability)
+
 ## Summary
 
 -   [About](#about)
