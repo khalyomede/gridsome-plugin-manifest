@@ -1,5 +1,6 @@
 exclude_patterns:
-  - "test/"
+	- "lib/"
+	- "test/"
+	- "example/"
 	- "gulpfile.babel.js"
-	- "gridsome.client.js"
-  - "gridsome.server.js"
+	- "stryker.conf.js"
