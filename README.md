@@ -36,7 +36,7 @@ With NPM:
 npm install --save-dev gridsome-plugin-manifest
 ```
 
-With Yarn!
+With Yarn:
 
 ```bash
 yarn add --dev gridsome-plugin-manifest
@@ -48,7 +48,7 @@ In your file `gridsome.config.js`, add the following in the `plugin` key:
 
 ```javascript
 module.exports = {
-	name: "Gridsome",
+	siteName: "Gridsome",
 	plugins: [
 		{
 			use: "gridsome-plugin-manifest",
