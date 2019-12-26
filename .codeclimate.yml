@@ -1,7 +1,0 @@
-version: "2"
-exclude_patterns:
-	- "test/"
-	- "error-logger.js"
-	- "gridsome.client.js"
-	- "gridsome.server.js"
-  - "gulpfile.babel.js"
