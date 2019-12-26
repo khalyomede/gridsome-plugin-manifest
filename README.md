@@ -14,6 +14,7 @@ Generates a manifest and handle icons generation for your PWA.
 -   [Changelog](CHANGELOG.md)
 -   [API](#api)
 -   [Known issues](#known-issues)
+-   [Run the tests](#run-the-tests)
 
 ## About
 
@@ -80,3 +81,41 @@ module.exports = {
 ## Known issues
 
 -   The icon **must** be square (the size that is used in the `icons` key of the `manifest.json` file is for the moment `width x width`, so for example a width of `512` will produce a `sizes` key equal to `512x512`)
+
+## Run the tests
+
+1. Clone the project: `git clone https://github.com/khalyomede/gridsome-plugin-manifest`
+2. Install the dependencies
+    - with NPM: `npm install`
+    - with Yarn: `yarn install`
+3. Run the tests
+    - with NPM: `npm run test`
+    - with Yarn: `yarn test`
+
+You should see something like:
+
+```
+$ nyc mocha --require @babel/register test
+
+
+  client
+    √ should export a function
+
+  server
+    general
+      √ should export a function
+    defaultOptions
+      √ should return default options
+
+
+  3 passing (22ms)
+
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+-------------------|---------|----------|---------|---------|-------------------
+All files          |    17.8 |     4.88 |    9.52 |   18.92 |
+ error-logger.js   |      80 |      100 |       0 |      80 | 8
+ ...some.client.js |      50 |      100 |       0 |   66.67 | 2
+ ...some.server.js |   13.76 |     4.88 |   10.53 |   14.56 | ...30-232,257-259
+-------------------|---------|----------|---------|---------|-------------------
+```
