@@ -173,16 +173,16 @@ function () {
             case 0:
               console.time("gridsome-plugin-manifest");
               error = Joi.object({
-                backgroundColor: Joi.string().required(),
+                background_color: Joi.string().required(),
                 display: Joi.string().required().valid("standalone", "minimal-ui", "fullscreen"),
-                iconPath: Joi.string().required(),
+                icon_path: Joi.string().required(),
                 name: Joi.string().required(),
-                fileName: Joi.string().required(),
+                file_name: Joi.string().required(),
                 orientation: Joi.string().required().valid("any", "natural", "landscape", "landscape-primary", "landscape-secondary", "portrait", "portrait-primary", "portrait-secondary"),
                 scope: Joi.string().required(),
-                shortName: Joi.string().required(),
-                startUrl: Joi.string().required(),
-                themeColor: Joi.string().required()
+                short_name: Joi.string().required(),
+                start_url: Joi.string().required(),
+                theme_color: Joi.string().required()
               }).validate(options).error;
 
               if (error instanceof Error) {
@@ -197,7 +197,7 @@ function () {
                 mkdirp_1.sync("./static/assets/img");
               }
 
-              iconFileName = options.iconPath !== undefined ? path_1.basename(options.iconPath) : "icon.png";
+              iconFileName = options.icon_path !== undefined ? path_1.basename(options.icon_path) : "icon.png";
               iconFileName512 = rename(iconFileName, {
                 suffix: "-512"
               }).toString();
@@ -218,7 +218,7 @@ function () {
               }).toString();
               return [4
               /*yield*/
-              , Promise.all([sharp(options.iconPath).resize(512).toFile("./static/assets/img/" + iconFileName512), sharp(options.iconPath).resize(192).toFile("./static/assets/img/" + iconFileName192), sharp(options.iconPath).resize(144).toFile("./static/assets/img/" + iconFileName144), sharp(options.iconPath).resize(96).toFile("./static/assets/img/" + iconFileName96), sharp(options.iconPath).resize(72).toFile("./static/assets/img/" + iconFileName72), sharp(options.iconPath).resize(48).toFile("./static/assets/img/" + iconFileName48)])];
+              , Promise.all([sharp(options.icon_path).resize(512).toFile("./static/assets/img/" + iconFileName512), sharp(options.icon_path).resize(192).toFile("./static/assets/img/" + iconFileName192), sharp(options.icon_path).resize(144).toFile("./static/assets/img/" + iconFileName144), sharp(options.icon_path).resize(96).toFile("./static/assets/img/" + iconFileName96), sharp(options.icon_path).resize(72).toFile("./static/assets/img/" + iconFileName72), sharp(options.icon_path).resize(48).toFile("./static/assets/img/" + iconFileName48)])];
 
             case 1:
               _a.sent();
@@ -227,7 +227,7 @@ function () {
                 mkdirp_1.sync("./static");
               }
 
-              mimeType = mime.lookup(options.iconPath !== undefined ? options.iconPath : "png");
+              mimeType = mime.lookup(options.icon_path !== undefined ? options.icon_path : "png");
               mimeType = mimeType === false ? "image/png" : mimeType;
               options.icons = [{
                 src: "/assets/img/" + iconFileName512,
@@ -254,7 +254,7 @@ function () {
                 type: mimeType,
                 sizes: "48x48"
               }];
-              fs_1.writeFileSync("./static/" + options.fileName, JSON.stringify(options, undefined, 4));
+              fs_1.writeFileSync("./static/" + options.file_name, JSON.stringify(options, undefined, 4));
               console.timeEnd("gridsome-plugin-manifest");
               return [2
               /*return*/
@@ -268,10 +268,10 @@ function () {
   GridsomePluginManifest.defaultOptions = function () {
     return {
       display: "minimal-ui",
-      fileName: "manifest.json",
+      file_name: "manifest.json",
       orientation: "any",
       scope: "/",
-      startUrl: "/"
+      start_url: "/"
     };
   };
 

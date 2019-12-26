@@ -11,10 +11,10 @@ describe("server", () => {
 		it("should return default options", () =>
 			expect(gridsomeServer.defaultOptions()).to.be.deep.equal({
 				display: "minimal-ui",
-				fileName: "manifest.json",
+				file_name: "manifest.json",
 				orientation: "any",
 				scope: "/",
-				startUrl: "/",
+				start_url: "/",
 			}));
 	});
 });
