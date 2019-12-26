@@ -3,4 +3,4 @@ exclude_patterns:
 	- "error-logger.js"
 	- "gridsome.client.js"
 	- "gridsome.server.js"
-	- "gulpfile.babel.js"
+  - "gulpfile.babel.js"
