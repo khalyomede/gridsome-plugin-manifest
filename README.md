@@ -68,15 +68,15 @@ module.exports = {
 ## API
 
 -   Options
-    -   backgroundColor: `String` The background of your PWA loading screen
+    -   background_color: `String` The background of your PWA loading screen
     -   name: `String` The name displayed in your PWA loading screen
-    -   themeColor: `String` The color of the text in your PWA loading screen
+    -   theme_color: `String` The color of the text in your PWA loading screen
     -   display: `standalone` | `minimal-ui` | `fullscreen` (default: `minimal-ui`)
     -   scope: `String` The scope of your PWA (should be an absolute URL)
     -   orientation: `any` | `natural` | `landscape` | `landscape-primary` | `landscape-secondary` | `portrait` | `portrait-primary` | `portrait-secondary` (default: `any`)
-    -   startUrl: `String` The URL where the user will begin if he/she starts your PWA
-    -   fileName: `String` The name of your manifest file (default: `manifest.json`)
-    -   iconPath: `String` The path (include the file name) where your icon is stored at
+    -   start_url: `String` The URL where the user will begin if he/she starts your PWA
+    -   file_name: `String` The name of your manifest file (default: `manifest.json`)
+    -   icon_path: `String` The path (include the file name) where your icon is stored at
 
 ## Known issues
 
