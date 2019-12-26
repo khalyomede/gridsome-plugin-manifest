@@ -54,11 +54,11 @@ module.exports = {
 		{
 			use: "gridsome-plugin-manifest",
 			options: {
-				backgroundColor: "#000000",
-				iconPath: "./src/assets/img/icon.png",
+				background_color: "#000000",
+				icon_path: "./src/assets/img/icon.png",
 				name: "My app name",
-				shortName: "App",
-				themeColor: "#FFFFFF",
+				short_name: "App",
+				theme_color: "#FFFFFF",
 			},
 		},
 	],

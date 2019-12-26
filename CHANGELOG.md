@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+-   The documentation example showing the necessary keys to add to the `options` key of the plugin have been updated to follow one of the fix that the version `0.2.0` provided.
+
 ## [0.2.0] - 2019-12-26
 
 ### Added
