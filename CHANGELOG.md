@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+-   The names of the different options in the API section of the README have been updated to reflect the changes in the version `0.2.0`.
+
+### Fixed
+
 -   The documentation example showing the necessary keys to add to the `options` key of the plugin have been updated to follow one of the fix that the version `0.2.0` provided.
 
 ## [0.2.0] - 2019-12-26
