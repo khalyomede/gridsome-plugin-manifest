@@ -174,7 +174,7 @@ function () {
               console.time("gridsome-plugin-manifest");
               error = Joi.object({
                 backgroundColor: Joi.string().required(),
-                display: Joi.string().required().valid("browser", "standalone", "minimal-ui", "fullscreen"),
+                display: Joi.string().required().valid("standalone", "minimal-ui", "fullscreen"),
                 iconPath: Joi.string().required(),
                 name: Joi.string().required(),
                 fileName: Joi.string().required(),
@@ -267,7 +267,7 @@ function () {
 
   GridsomePluginManifest.defaultOptions = function () {
     return {
-      display: "browser",
+      display: "minimal-ui",
       fileName: "manifest.json",
       orientation: "any",
       scope: "/",

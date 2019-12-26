@@ -18,7 +18,7 @@ class GridsomePluginManifest {
 				backgroundColor: Joi.string().required(),
 				display: Joi.string()
 					.required()
-					.valid("browser", "standalone", "minimal-ui", "fullscreen"),
+					.valid("standalone", "minimal-ui", "fullscreen"),
 				iconPath: Joi.string().required(),
 				name: Joi.string().required(),
 				fileName: Joi.string().required(),
@@ -151,7 +151,7 @@ class GridsomePluginManifest {
 
 	public static defaultOptions(): IOptions {
 		return {
-			display: "browser",
+			display: "minimal-ui",
 			fileName: "manifest.json",
 			orientation: "any",
 			scope: "/",

@@ -10,7 +10,7 @@ describe("server", () => {
 	describe("defaultOptions", () => {
 		it("should return default options", () =>
 			expect(gridsomeServer.defaultOptions()).to.be.deep.equal({
-				display: "browser",
+				display: "minimal-ui",
 				fileName: "manifest.json",
 				orientation: "any",
 				scope: "/",

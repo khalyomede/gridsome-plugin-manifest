@@ -70,7 +70,7 @@ module.exports = {
     -   backgroundColor: `String` The background of your PWA loading screen
     -   name: `String` The name displayed in your PWA loading screen
     -   themeColor: `String` The color of the text in your PWA loading screen
-    -   display: `browser` | `standalone` | `minimal-ui` | `fullscreen` (default: `browser`)
+    -   display: `standalone` | `minimal-ui` | `fullscreen` (default: `minimal-ui`)
     -   scope: `String` The scope of your PWA (should be an absolute URL)
     -   orientation: `any` | `natural` | `landscape` | `landscape-primary` | `landscape-secondary` | `portrait` | `portrait-primary` | `portrait-secondary` (default: `any`)
     -   startUrl: `String` The URL where the user will begin if he/she starts your PWA

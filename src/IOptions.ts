@@ -5,7 +5,7 @@ interface IOptions {
 	shortName?: string;
 	themeColor?: string;
 	backgroundColor?: string;
-	display: "browser" | "standalone" | "minimal-ui" | "fullscreen";
+	display: "standalone" | "minimal-ui" | "fullscreen";
 	scope: string;
 	orientation:
 		| "any"

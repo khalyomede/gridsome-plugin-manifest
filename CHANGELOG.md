@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+-   The default `display` option in the manifest will now be `minimal-ui` (instead of `browser`) to fix a bug when Lighthouse was not recognizing the `browser` display value.
+
 ## [0.1.1] - 2019-12-25
 
 ### Fixed
