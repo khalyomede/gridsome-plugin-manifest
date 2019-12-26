@@ -32,9 +32,11 @@
 		"gulp-tslint": "8.*",
 		"gulp-typescript": "5.*",
 		"mocha": "6.*",
+		"mocha-sinon": "2.*",
 		"np": "5.*",
 		"npm-check-updates": "4.*",
 		"nyc": "15.*",
+		"sinon": "8.*",
 		"tslint": "5.*",
 		"typescript": "3.*",
 		"yarn": "^1.21.1"
