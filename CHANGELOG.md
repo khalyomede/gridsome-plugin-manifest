@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2019-12-26
+
 ### Added
 
 -   A `<meta name="theme-color" />` will be automatically added to the head of your html files (using the `theme_color` value you provided in the options in the file `gridsome.client.js`).
