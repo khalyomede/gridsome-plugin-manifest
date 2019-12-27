@@ -3,6 +3,7 @@ import { expect } from "chai";
 import { red } from "cli-color";
 import gridsomeServer from "../gridsome.server";
 import { existsSync } from "fs";
+import { execSync } from "child_process";
 
 const api = {
 	beforeBuild: callable => callable(),
@@ -1115,6 +1116,10 @@ describe("server", () => {
 				expect(existsSync("./static")).to.be.true;
 				expect(existsSync("./static/assets")).to.be.true;
 				expect(existsSync("./static/assets/img")).to.be.true;
+
+				if (existsSync("./static")) {
+					execSync("rm -rf ./static");
+				}
 			});
 		});
 	});
