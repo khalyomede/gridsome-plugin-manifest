@@ -22,6 +22,9 @@ describe("server", () => {
 				orientation: "any",
 				scope: "/",
 				start_url: "/",
+				dir: "auto",
+				prefer_related_applications: false,
+				related_applications: [],
 			}));
 	});
 
@@ -611,6 +614,487 @@ describe("server", () => {
 						console.error.calledWith(
 							`gridsome-plugin-manifest: ${red(
 								'"theme_color" must be a string'
+							)}`
+						)
+					).to.be.false;
+				});
+			});
+
+			describe("dir", () => {
+				it("should print an error if dir option is not a string", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: 42,
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"dir" must be one of [ltr, rtl, auto]'
+							)}`
+						)
+					).to.be.true;
+				});
+
+				it("should print an error if dir option is empty", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "",
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"dir" must be one of [ltr, rtl, auto]'
+							)}`
+						)
+					).to.be.true;
+				});
+
+				it("should not print an error if dir option is one of the allowed string value", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"dir" must be one of [ltr, rtl, auto]'
+							)}`
+						)
+					).to.be.false;
+				});
+			});
+
+			describe("lang", () => {
+				it("should print an error if lang option is not a string", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: 42,
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"lang" must be a string'
+							)}`
+						)
+					).to.be.true;
+				});
+
+				it("should print an error if lang option is empty", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "",
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"lang" is not allowed to be empty'
+							)}`
+						)
+					).to.be.true;
+				});
+
+				it("should not print an error if lang option is a valid ISO 2 string lang", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "#000000",
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"lang" must be a string'
+							)}`
+						)
+					).to.be.false;
+				});
+			});
+
+			describe("prefer_related_applications", () => {
+				it("should print an error if prefer_related_applications option is not a boolean", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "en",
+						prefer_related_applications: 42,
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"prefer_related_applications" must be a boolean'
+							)}`
+						)
+					).to.be.true;
+				});
+
+				it("should not print an error if prefer_related_applications option is a valid boolean", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "en",
+						prefer_related_applications: true,
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"prefer_related_applications" must be a boolean'
+							)}`
+						)
+					).to.be.false;
+				});
+			});
+
+			describe("related_applications", () => {
+				it("should print an error if related_applications option is not an array", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "en",
+						prefer_related_applications: true,
+						related_applications: 42,
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"related_applications" must be an array'
+							)}`
+						)
+					).to.be.true;
+				});
+
+				it("should print an error if related_applications option is an array of non objects", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "en",
+						prefer_related_applications: true,
+						related_applications: [42],
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"related_applications[0]" must be of type object'
+							)}`
+						)
+					).to.be.true;
+				});
+
+				it("should print an error if related_applications option is an array of related applications missing the platform key", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "en",
+						prefer_related_applications: true,
+						related_applications: [
+							{
+								url:
+									"https://play.google.com/store/apps/details?id=com.example.app1",
+							},
+						],
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"related_applications[0].platform" is required'
+							)}`
+						)
+					).to.be.true;
+				});
+
+				it("should print an error if related_applications option is an array of related applications with an empty platform key", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "en",
+						prefer_related_applications: true,
+						related_applications: [
+							{
+								platform: "",
+							},
+						],
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"related_applications[0].platform" is not allowed to be empty'
+							)}`
+						)
+					).to.be.true;
+				});
+
+				it("should print an error if related_applications option is an array of related applications missing the url key", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "en",
+						prefer_related_applications: true,
+						related_applications: [
+							{
+								platform: "play",
+							},
+						],
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"related_applications[0].url" is required'
+							)}`
+						)
+					).to.be.true;
+				});
+
+				it("should print an error if related_applications option is an array of related applications with an empty url key", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "en",
+						prefer_related_applications: true,
+						related_applications: [
+							{
+								platform: "play",
+								url: "",
+							},
+						],
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"related_applications[0].url" is not allowed to be empty'
+							)}`
+						)
+					).to.be.true;
+				});
+
+				it("should not print an error if related_applications option is an empty array", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "en",
+						prefer_related_applications: true,
+						related_applications: [],
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"related_applications" must be a boolean'
+							)}`
+						)
+					).to.be.false;
+				});
+
+				it("should not print an error if related_applications option is an array of a single related application missing the id key", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "en",
+						prefer_related_applications: true,
+						related_applications: [
+							{
+								platform: "play",
+								url:
+									"https://play.google.com/store/apps/details?id=com.example.app1",
+							},
+						],
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"related_applications[0].id" is required'
+							)}`
+						)
+					).to.be.false;
+				});
+
+				it("should not print an error if related_applications option is an array of a single related application with id key", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "en",
+						prefer_related_applications: true,
+						related_applications: [
+							{
+								platform: "play",
+								url:
+									"https://play.google.com/store/apps/details?id=com.example.app1",
+								id: "com.example.app1",
+							},
+						],
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"related_applications[0].id" is not allowed'
 							)}`
 						)
 					).to.be.false;

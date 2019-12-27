@@ -60,6 +60,7 @@ module.exports = {
 				name: "My app name",
 				short_name: "App",
 				theme_color: "#FFFFFF",
+				lang: "en",
 			},
 		},
 	],
@@ -87,6 +88,20 @@ To check it work, serve your application locally, then use Chrome DevTools to ru
     -   **start_url**: `String` The URL where the user will begin if he/she starts your PWA
     -   **file_name**: `String` The name of your manifest file (default: `manifest.json`)
     -   **icon_path**: `String` The path (include the file name) where your icon is stored at
+    -   **dir**: `ltr` | `rtl` | `auto` The direction of the text (default: `auto`)
+    -   **lang**: `String` An ISO 2 lang code to determine which lang the `name` and `short_name` are displayed on.
+    -   **prefer_related_applications**: `Boolean` Whether to prompt to open any link with another app than this PWA or not (default: `false`).
+    -   **related_applications**: `Array<RelatedApplication>`: A list of the related applications (see below for the prototype of a `RelatedApplication`).
+
+```typescript
+interface RelatedApplication {
+	platform: string;
+	url: string;
+	id?: string;
+}
+```
+
+_(`?:` means "non mandatory field")._
 
 ## Known issues
 

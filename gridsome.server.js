@@ -182,7 +182,15 @@ function () {
                 scope: Joi.string().required(),
                 short_name: Joi.string().required(),
                 start_url: Joi.string().required(),
-                theme_color: Joi.string().required()
+                theme_color: Joi.string().required(),
+                dir: Joi.string().required().valid("ltr", "rtl", "auto"),
+                lang: Joi.string().required(),
+                prefer_related_applications: Joi.bool().strict().required(),
+                related_applications: Joi.array().items(Joi.object({
+                  platform: Joi.string().required(),
+                  url: Joi.string().required(),
+                  id: Joi.string()
+                })).required()
               }).validate(options).error;
 
               if (error instanceof Error) {
@@ -271,7 +279,10 @@ function () {
       file_name: "manifest.json",
       orientation: "any",
       scope: "/",
-      start_url: "/"
+      start_url: "/",
+      dir: "auto",
+      prefer_related_applications: false,
+      related_applications: []
     };
   };
 

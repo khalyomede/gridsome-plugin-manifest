@@ -7,9 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking
+
+-   You will need to add an ISO 2 `lang` value in your configuration in order to keep generating a manifest file without issues.
+
+### Added
+
+-   Support for the keys `dir`, `lang`, `prefer_related_applications` and `related_applications` in the manifest: they are now configurable and will be outputed in the `manifest.json` file.
+
 ### Fixed
 
 -   The names of the different options in the API section of the README have been updated to reflect the changes in the version `0.2.0`.
+-   The manifest file will now be served with the MIME type `application/manifest+json` instead of `application/json` to respect the standard.
 
 ## [0.2.1] - 2019-12-26
 
