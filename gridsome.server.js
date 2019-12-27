@@ -159,9 +159,7 @@ var sharp = require("sharp");
 
 var error_logger_1 = require("./error-logger");
 
-var GridsomePluginManifest =
-/** @class */
-function () {
+var GridsomePluginManifest = function () {
   function GridsomePluginManifest(api, options) {
     var _this = this;
 
@@ -171,7 +169,6 @@ function () {
         return __generator(this, function (_a) {
           switch (_a.label) {
             case 0:
-              /* tslint:disable:no-console */
               console.time("gridsome-plugin-manifest");
               error = Joi.object({
                 background_color: Joi.string().required(),
@@ -196,14 +193,8 @@ function () {
 
               if (error instanceof Error) {
                 error_logger_1["default"](error.message);
-                /* tslint:disable:no-console */
-
                 console.timeEnd("gridsome-plugin-manifest");
-                /* tslint:enable:no-console */
-
-                return [2
-                /*return*/
-                ];
+                return [2];
               }
 
               if (!fs_1.existsSync("./static/assets/img")) {
@@ -229,9 +220,7 @@ function () {
               iconFileName48 = rename(iconFileName, {
                 suffix: "-48"
               }).toString();
-              return [4
-              /*yield*/
-              , Promise.all([sharp(options.icon_path).resize(512).toFile("./static/assets/img/" + iconFileName512), sharp(options.icon_path).resize(192).toFile("./static/assets/img/" + iconFileName192), sharp(options.icon_path).resize(144).toFile("./static/assets/img/" + iconFileName144), sharp(options.icon_path).resize(96).toFile("./static/assets/img/" + iconFileName96), sharp(options.icon_path).resize(72).toFile("./static/assets/img/" + iconFileName72), sharp(options.icon_path).resize(48).toFile("./static/assets/img/" + iconFileName48)])];
+              return [4, Promise.all([sharp(options.icon_path).resize(512).toFile("./static/assets/img/" + iconFileName512), sharp(options.icon_path).resize(192).toFile("./static/assets/img/" + iconFileName192), sharp(options.icon_path).resize(144).toFile("./static/assets/img/" + iconFileName144), sharp(options.icon_path).resize(96).toFile("./static/assets/img/" + iconFileName96), sharp(options.icon_path).resize(72).toFile("./static/assets/img/" + iconFileName72), sharp(options.icon_path).resize(48).toFile("./static/assets/img/" + iconFileName48)])];
 
             case 1:
               _a.sent();
@@ -268,12 +257,8 @@ function () {
                 sizes: "48x48"
               }];
               fs_1.writeFileSync("./static/" + options.file_name, JSON.stringify(options, undefined, 4));
-              /* tslint:disable:no-console */
-
               console.timeEnd("gridsome-plugin-manifest");
-              return [2
-              /*return*/
-              ];
+              return [2];
           }
         });
       });
