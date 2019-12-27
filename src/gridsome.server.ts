@@ -12,7 +12,9 @@ import IPluginAPI from "./IPluginAPI";
 class GridsomePluginManifest {
 	public constructor(api: IPluginAPI, options: IOptions) {
 		api.beforeBuild(async () => {
+			/* tslint:disable:no-console */
 			console.time("gridsome-plugin-manifest");
+			/* tslint:enable:no-console */
 
 			const { error } = Joi.object({
 				background_color: Joi.string().required(),
@@ -59,7 +61,9 @@ class GridsomePluginManifest {
 			if (error instanceof Error) {
 				errorLogger(error.message);
 
+				/* tslint:disable:no-console */
 				console.timeEnd("gridsome-plugin-manifest");
+				/* tslint:enable:no-console */
 
 				return;
 			}
@@ -161,7 +165,9 @@ class GridsomePluginManifest {
 				JSON.stringify(options, undefined, 4)
 			);
 
+			/* tslint:disable:no-console */
 			console.timeEnd("gridsome-plugin-manifest");
+			/* tslint:enable:no-console */
 		});
 	}
 

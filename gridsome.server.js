@@ -171,6 +171,7 @@ function () {
         return __generator(this, function (_a) {
           switch (_a.label) {
             case 0:
+              /* tslint:disable:no-console */
               console.time("gridsome-plugin-manifest");
               error = Joi.object({
                 background_color: Joi.string().required(),
@@ -195,7 +196,11 @@ function () {
 
               if (error instanceof Error) {
                 error_logger_1["default"](error.message);
+                /* tslint:disable:no-console */
+
                 console.timeEnd("gridsome-plugin-manifest");
+                /* tslint:enable:no-console */
+
                 return [2
                 /*return*/
                 ];
@@ -263,6 +268,8 @@ function () {
                 sizes: "48x48"
               }];
               fs_1.writeFileSync("./static/" + options.file_name, JSON.stringify(options, undefined, 4));
+              /* tslint:disable:no-console */
+
               console.timeEnd("gridsome-plugin-manifest");
               return [2
               /*return*/
