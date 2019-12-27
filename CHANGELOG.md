@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] 2019-12-27
+
 ### Breaking
 
 -   You will need to add an ISO 2 `lang` value in your configuration in order to keep generating a manifest file without issues.
