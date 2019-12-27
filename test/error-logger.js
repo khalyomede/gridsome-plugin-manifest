@@ -5,6 +5,7 @@ import { red } from "cli-color";
 
 beforeEach(function() {
 	this.sinon.stub(console, "error");
+	this.sinon.stub(console, "log");
 });
 
 describe("error-logger", () => {
