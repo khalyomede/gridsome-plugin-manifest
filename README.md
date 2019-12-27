@@ -24,6 +24,7 @@ I made this plugin because I use gridsome to make my next web app, and I wanted 
 
 -   Generates a `manifest.json` at the root of your dist folder
 -   Automatically generates 512, 192, 144, 98, 72, and 48px wide icons from your original icon
+-   Adds a `<meta name="theme-color" />` and a `<link rel="manifest" />` at the head of each of your HTML files
 
 ## Requirements
 
@@ -64,6 +65,15 @@ module.exports = {
 	],
 };
 ```
+
+Build your project:
+
+-   With NPM: `npm run build`
+-   With Yarn: `yarn build`
+
+To check it work, serve your application locally, then use Chrome DevTools to run a check on the PWA "manifest" test to check it has successfuly taken your manifest file into account.
+
+![google-dev-tools-showing-manifest-passes-test](https://user-images.githubusercontent.com/15908747/71518859-2dc07280-28b5-11ea-8713-600a6bd542f2.png)
 
 ## API
 
