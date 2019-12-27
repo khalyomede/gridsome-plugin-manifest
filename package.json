@@ -1,6 +1,6 @@
 {
 	"name": "gridsome-plugin-manifest",
-	"version": "0.2.1",
+	"version": "0.3.0",
 	"description": "Generates a manifest and handle icons generation for your PWA.",
 	"main": "gridsome.server.js",
 	"repository": "https://github.com/khalyomede/gridsome-plugin-manifest",
