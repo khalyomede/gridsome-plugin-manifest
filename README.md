@@ -22,9 +22,9 @@ I made this plugin because I use gridsome to make my next web app, and I wanted 
 
 ## Features
 
--   Generates a `manifest.json` at the root of your dist folder
+-   Generates a `manifest.json` at the root of your dist folder at build time
 -   Automatically generates 512, 192, 144, 98, 72, and 48px wide icons from your original icon
--   Adds a `<meta name="theme-color" />` and a `<link rel="manifest" />` at the head of each of your HTML files
+-   Adds a `<meta name="theme-color" />` and a `<link rel="manifest" />` (at build time) at the head of each of your HTML files
 
 ## Requirements
 

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+-   Bug when the manifest file were not found (the error was visible in the browser console) in development mode. Instead, it will now be removed in development mode, but still generated (with its `<link rel="manifest" />`) at build time.
+
 ## [0.3.0] 2019-12-27
 
 ### Breaking
