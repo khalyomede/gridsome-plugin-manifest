@@ -68,14 +68,24 @@ class GridsomePluginManifest {
 				return;
 			}
 
+			if (
+				options.icon_path === undefined ||
+				!existsSync(options.icon_path)
+			) {
+				errorLogger(`"icon_path" should target an existing file`);
+
+				/* tslint:disable:no-console */
+				console.timeEnd("gridsome-plugin-manifest");
+				/* tslint:enable:no-console */
+
+				return;
+			}
+
 			if (!existsSync("./static/assets/img")) {
 				sync("./static/assets/img");
 			}
 
-			const iconFileName =
-				options.icon_path !== undefined
-					? basename(options.icon_path)
-					: "icon.png";
+			const iconFileName = basename(options.icon_path);
 
 			const iconFileName512 = rename(iconFileName, {
 				suffix: "-512",
@@ -121,9 +131,7 @@ class GridsomePluginManifest {
 				sync("./static");
 			}
 
-			let mimeType = mime.lookup(
-				options.icon_path !== undefined ? options.icon_path : "png"
-			);
+			let mimeType = mime.lookup(options.icon_path);
 
 			mimeType = mimeType === false ? "image/png" : mimeType;
 

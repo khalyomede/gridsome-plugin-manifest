@@ -9,6 +9,11 @@ const api = {
 	beforeBuild: callable => callable(),
 };
 
+const sleep = ms =>
+	new Promise(resolve => {
+		setTimeout(resolve, ms);
+	});
+
 describe("server", () => {
 	describe("general", () => {
 		it("should export a function", () =>
@@ -165,6 +170,33 @@ describe("server", () => {
 						console.error.calledWith(
 							`gridsome-plugin-manifest: ${red(
 								'"icon_path" is not allowed to be empty'
+							)}`
+						)
+					).to.be.true;
+				});
+
+				it("should print an error if icon_path option targets a non existing file", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: "./src/assets/img/icon.png",
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "en",
+						prefer_related_applications: false,
+						related_applications: [],
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: ${red(
+								'"icon_path" should target an existing file'
 							)}`
 						)
 					).to.be.true;
@@ -1104,18 +1136,36 @@ describe("server", () => {
 		});
 
 		describe("behavior", () => {
-			it("should create the folders static/assets/img if they do not exists", () => {
+			it("should create the folders static/assets/img if they do not exists", async () => {
 				new gridsomeServer(api, {
 					background_color: "#FFFFFF",
-					icon_path: "./src/assets/img/icon.png",
+					display: "standalone",
+					icon_path: `${__dirname}/misc/logo.svg`,
 					name: "Gridsome",
+					file_name: "manifest.json",
+					orientation: "portrait",
+					scope: "/",
 					short_name: "GRID",
+					start_url: "/",
 					theme_color: "#000000",
+					dir: "ltr",
+					lang: "en",
+					prefer_related_applications: true,
+					related_applications: [
+						{
+							platform: "play",
+							url:
+								"https://play.google.com/store/apps/details?id=com.example.app1",
+							id: "com.example.app1",
+						},
+					],
 				});
 
 				expect(existsSync("./static")).to.be.true;
 				expect(existsSync("./static/assets")).to.be.true;
 				expect(existsSync("./static/assets/img")).to.be.true;
+
+				await sleep(200);
 
 				if (existsSync("./static")) {
 					execSync("rm -rf ./static");

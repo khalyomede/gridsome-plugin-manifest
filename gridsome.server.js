@@ -197,11 +197,17 @@ var GridsomePluginManifest = function () {
                 return [2];
               }
 
+              if (options.icon_path === undefined || !fs_1.existsSync(options.icon_path)) {
+                error_logger_1["default"]("\"icon_path\" should target an existing file");
+                console.timeEnd("gridsome-plugin-manifest");
+                return [2];
+              }
+
               if (!fs_1.existsSync("./static/assets/img")) {
                 mkdirp_1.sync("./static/assets/img");
               }
 
-              iconFileName = options.icon_path !== undefined ? path_1.basename(options.icon_path) : "icon.png";
+              iconFileName = path_1.basename(options.icon_path);
               iconFileName512 = rename(iconFileName, {
                 suffix: "-512"
               }).toString();
@@ -229,7 +235,7 @@ var GridsomePluginManifest = function () {
                 mkdirp_1.sync("./static");
               }
 
-              mimeType = mime.lookup(options.icon_path !== undefined ? options.icon_path : "png");
+              mimeType = mime.lookup(options.icon_path);
               mimeType = mimeType === false ? "image/png" : mimeType;
               options.icons = [{
                 src: "/assets/img/" + iconFileName512,
