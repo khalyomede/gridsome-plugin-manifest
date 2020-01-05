@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### [0.3.2] 2020-01-05
+
 ### Fixed
 
 -   The error when you do not add an `icon_path` or have this option targeting a non existing file will now be more explicit, rather than being cryptic (because thrown by a dependency).
