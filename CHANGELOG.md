@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+-   Building a Gridsome project using this plugin on Netlify will not make the build fail anymore (due to the removal of a package that was causing the issue).
+
 ### [0.3.2] 2020-01-05
 
 ### Fixed
