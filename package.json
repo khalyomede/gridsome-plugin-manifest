@@ -18,7 +18,7 @@
 		"@babel/preset-env": "7.*",
 		"@babel/register": "7.*",
 		"@babel/runtime": "7.*",
-		"@types/cli-color": "0.*",
+		"@types/cli-color": "2.*",
 		"@types/hapi__joi": "16.*",
 		"@types/mime-types": "2.*",
 		"@types/mkdirp": "0.*",
