@@ -46,7 +46,7 @@
 	"scripts": {
 		"start": "ncu && gulp build && gulp start",
 		"build": "ncu && gulp build",
-		"test": "nyc --reporter=lcov --report=text-summary mocha --require @babel/register test",
+		"test": "nyc --reporter=lcov --reporter=text mocha --require @babel/register test",
 		"release": "np",
 		"coverage": "codecov"
 	},
