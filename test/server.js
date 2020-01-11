@@ -65,6 +65,18 @@ describe("server", () => {
 					).to.be.true;
 				});
 
+				it("should print an error if background_color option is not a valid hexadecimal color", () => {
+					new gridsomeServer(api, {
+						background_color: "red",
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: "background_color" must be a valid hexadecimal color`
+						)
+					).to.be.true;
+				});
+
 				it("should not print an error if background_color option is a valid hex color string", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
@@ -72,7 +84,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: "background_color" must be a string`
+							`gridsome-plugin-manifest: "background_color" must be a valid hexadecimal color`
 						)
 					).to.be.false;
 				});
@@ -609,6 +621,27 @@ describe("server", () => {
 					).to.be.true;
 				});
 
+				it("should print an error if theme_color option is not a valid hexadecimal color", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: `${__dirname}/misc/logo.svg`,
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "red",
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: "theme_color" must be a valid hexadecimal color`
+						)
+					).to.be.true;
+				});
+
 				it("should not print an error if theme_color option is a valid hex color string", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
@@ -625,7 +658,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: "theme_color" must be a string`
+							`gridsome-plugin-manifest: "theme_color" must be a valid hexadecimal color`
 						)
 					).to.be.false;
 				});

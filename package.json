@@ -51,6 +51,7 @@
 		"coverage": "codecov"
 	},
 	"dependencies": {
+		"is-hexcolor": "1.*",
 		"mime-types": "2.*",
 		"mkdirp": "0.*",
 		"rename": "1.*",

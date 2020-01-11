@@ -1,4 +1,5 @@
 import { existsSync, writeFileSync } from "fs";
+import * as isHexcolor from "is-hexcolor";
 import * as mime from "mime-types";
 import { sync } from "mkdirp";
 import { basename, isAbsolute } from "path";
@@ -200,12 +201,21 @@ class GridsomePluginManifest {
 		}
 	}
 
+	private _throwIfOptionNotHexColor(optionName: string): void {
+		if (!isHexcolor(this._options[optionName])) {
+			throw new TypeError(
+				`"${optionName}" must be a valid hexadecimal color`
+			);
+		}
+	}
+
 	private _checkBackgroundColorOption(): void {
 		const optionName = "background_color";
 
 		this._throwIfOptionMissing(optionName);
 		this._throwIfOptionNotString(optionName);
 		this._throwIfOptionNotFilledString(optionName);
+		this._throwIfOptionNotHexColor(optionName);
 
 		/**
 		 * @todo check if value if a valid hex color
@@ -306,6 +316,7 @@ class GridsomePluginManifest {
 		this._throwIfOptionMissing(optionName);
 		this._throwIfOptionNotString(optionName);
 		this._throwIfOptionNotFilledString(optionName);
+		this._throwIfOptionNotHexColor(optionName);
 
 		/**
 		 * @todo check if value is a valid hex color

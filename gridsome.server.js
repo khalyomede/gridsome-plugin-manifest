@@ -145,6 +145,8 @@ var __generator = void 0 && (void 0).__generator || function (thisArg, body) {
 
 var fs_1 = require("fs");
 
+var isHexcolor = require("is-hexcolor");
+
 var mime = require("mime-types");
 
 var mkdirp_1 = require("mkdirp");
@@ -322,6 +324,12 @@ var GridsomePluginManifest = function () {
     }
   };
 
+  GridsomePluginManifest.prototype._throwIfOptionNotHexColor = function (optionName) {
+    if (!isHexcolor(this._options[optionName])) {
+      throw new TypeError("\"" + optionName + "\" must be a valid hexadecimal color");
+    }
+  };
+
   GridsomePluginManifest.prototype._checkBackgroundColorOption = function () {
     var optionName = "background_color";
 
@@ -330,6 +338,8 @@ var GridsomePluginManifest = function () {
     this._throwIfOptionNotString(optionName);
 
     this._throwIfOptionNotFilledString(optionName);
+
+    this._throwIfOptionNotHexColor(optionName);
   };
 
   GridsomePluginManifest.prototype._checkDisplayOption = function () {
@@ -432,6 +442,8 @@ var GridsomePluginManifest = function () {
     this._throwIfOptionNotString(optionName);
 
     this._throwIfOptionNotFilledString(optionName);
+
+    this._throwIfOptionNotHexColor(optionName);
   };
 
   GridsomePluginManifest.prototype._checkDirOption = function () {
