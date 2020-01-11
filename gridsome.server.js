@@ -316,6 +316,12 @@ var GridsomePluginManifest = function () {
     }
   };
 
+  GridsomePluginManifest.prototype._throwIfOptionNotAbsolutePath = function (optionName) {
+    if (!path_1.isAbsolute(this._options[optionName])) {
+      throw new TypeError("\"" + optionName + "\" must be an absolute path");
+    }
+  };
+
   GridsomePluginManifest.prototype._checkBackgroundColorOption = function () {
     var optionName = "background_color";
 
@@ -392,6 +398,8 @@ var GridsomePluginManifest = function () {
     this._throwIfOptionNotString(optionName);
 
     this._throwIfOptionNotFilledString(optionName);
+
+    this._throwIfOptionNotAbsolutePath(optionName);
   };
 
   GridsomePluginManifest.prototype._checkShortNameOption = function () {
@@ -412,6 +420,8 @@ var GridsomePluginManifest = function () {
     this._throwIfOptionNotString(optionName);
 
     this._throwIfOptionNotFilledString(optionName);
+
+    this._throwIfOptionNotAbsolutePath(optionName);
   };
 
   GridsomePluginManifest.prototype._checkThemeColorOption = function () {

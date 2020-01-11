@@ -1,7 +1,7 @@
 import { existsSync, writeFileSync } from "fs";
 import * as mime from "mime-types";
 import { sync } from "mkdirp";
-import { basename } from "path";
+import { basename, isAbsolute } from "path";
 import * as rename from "rename";
 import * as sharp from "sharp";
 import IOptions from "./IOptions";
@@ -194,6 +194,12 @@ class GridsomePluginManifest {
 		}
 	}
 
+	private _throwIfOptionNotAbsolutePath(optionName: string): void {
+		if (!isAbsolute(this._options[optionName])) {
+			throw new TypeError(`"${optionName}" must be an absolute path`);
+		}
+	}
+
 	private _checkBackgroundColorOption(): void {
 		const optionName = "background_color";
 
@@ -274,10 +280,7 @@ class GridsomePluginManifest {
 		this._throwIfOptionMissing(optionName);
 		this._throwIfOptionNotString(optionName);
 		this._throwIfOptionNotFilledString(optionName);
-
-		/**
-		 * @todo check if value is a valid absolute path
-		 */
+		this._throwIfOptionNotAbsolutePath(optionName);
 	}
 
 	private _checkShortNameOption(): void {
@@ -294,10 +297,7 @@ class GridsomePluginManifest {
 		this._throwIfOptionMissing(optionName);
 		this._throwIfOptionNotString(optionName);
 		this._throwIfOptionNotFilledString(optionName);
-
-		/**
-		 * @todo checj if value is a valid absolute path
-		 */
+		this._throwIfOptionNotAbsolutePath(optionName);
 	}
 
 	private _checkThemeColorOption(): void {

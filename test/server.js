@@ -388,6 +388,24 @@ describe("server", () => {
 					).to.be.true;
 				});
 
+				it("should print an error if scope option is empty", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: `${__dirname}/misc/logo.svg`,
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "./",
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: "scope" must be an absolute path`
+						)
+					).to.be.true;
+				});
+
 				it("should not print an error if scope option is a valid absolute path", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
@@ -401,7 +419,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: "scope" must be a string`
+							`gridsome-plugin-manifest: "scope" must be an absolute path`
 						)
 					).to.be.false;
 				});
@@ -507,6 +525,26 @@ describe("server", () => {
 					).to.be.true;
 				});
 
+				it("should print an error if start_url option is empty", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: `${__dirname}/misc/logo.svg`,
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "./",
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: "start_url" must be an absolute path`
+						)
+					).to.be.true;
+				});
+
 				it("should not print an error if start_url option is a valid absolute path", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
@@ -522,7 +560,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: "start_url" must be a string`
+							`gridsome-plugin-manifest: "start_url" must be an absolute path`
 						)
 					).to.be.false;
 				});
