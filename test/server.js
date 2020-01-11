@@ -1,6 +1,5 @@
 import "mocha-sinon";
 import { expect } from "chai";
-import { red } from "cli-color";
 import gridsomeServer from "../gridsome.server";
 import { existsSync } from "fs";
 import { execSync } from "child_process";
@@ -8,6 +7,11 @@ import { execSync } from "child_process";
 const api = {
 	beforeBuild: callable => callable(),
 };
+
+beforeEach(function() {
+	this.sinon.stub(console, "error");
+	this.sinon.stub(console, "log");
+});
 
 const sleep = ms =>
 	new Promise(resolve => {
@@ -44,9 +48,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"background_color" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "background_color" must be a string`
 						)
 					).to.be.true;
 				});
@@ -58,9 +60,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"background_color" is not allowed to be empty'
-							)}`
+							`gridsome-plugin-manifest: "background_color" must be filled`
 						)
 					).to.be.true;
 				});
@@ -72,9 +72,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"background_color" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "background_color" must be a string`
 						)
 					).to.be.false;
 				});
@@ -89,9 +87,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"display" must be one of [standalone, minimal-ui, fullscreen]'
-							)}`
+							`gridsome-plugin-manifest: "display" must be a string`
 						)
 					).to.be.true;
 				});
@@ -104,9 +100,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"display" must be one of [standalone, minimal-ui, fullscreen]'
-							)}`
+							`gridsome-plugin-manifest: "display" must be filled`
 						)
 					).to.be.true;
 				});
@@ -119,14 +113,12 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"display" must be one of [standalone, minimal-ui, fullscreen]'
-							)}`
+							`gridsome-plugin-manifest: "display" must be one of [standalone,minimal-ui,fullscreen]`
 						)
 					).to.be.true;
 				});
 
-				it("should not print an error if display option is a valid hex color string", () => {
+				it("should not print an error if display option is a valid value", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
@@ -134,9 +126,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"display" must be one of [standalone, minimal-ui, fullscreen]'
-							)}`
+							`gridsome-plugin-manifest: "display" must be one of [standalone,minimal-ui,fullscreen]`
 						)
 					).to.be.false;
 				});
@@ -152,9 +142,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"icon_path" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "icon_path" must be a string`
 						)
 					).to.be.true;
 				});
@@ -168,9 +156,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"icon_path" is not allowed to be empty'
-							)}`
+							`gridsome-plugin-manifest: "icon_path" must be filled`
 						)
 					).to.be.true;
 				});
@@ -179,7 +165,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `./src/assets/img/icon.png`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -195,9 +181,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"icon_path" should target an existing file'
-							)}`
+							`gridsome-plugin-manifest: "icon_path" must target an existing file`
 						)
 					).to.be.true;
 				});
@@ -206,14 +190,12 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 					});
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"icon_path" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "icon_path" must target an existing file`
 						)
 					).to.be.false;
 				});
@@ -224,15 +206,13 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: 42,
 					});
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"name" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "name" must be a string`
 						)
 					).to.be.true;
 				});
@@ -241,15 +221,13 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "",
 					});
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"name" is not allowed to be empty'
-							)}`
+							`gridsome-plugin-manifest: "name" must be filled`
 						)
 					).to.be.true;
 				});
@@ -258,15 +236,13 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 					});
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"name" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "name" must be a string`
 						)
 					).to.be.false;
 				});
@@ -277,16 +253,14 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: 42,
 					});
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"file_name" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "file_name" must be a string`
 						)
 					).to.be.true;
 				});
@@ -295,16 +269,14 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "",
 					});
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"file_name" is not allowed to be empty'
-							)}`
+							`gridsome-plugin-manifest: "file_name" must be filled`
 						)
 					).to.be.true;
 				});
@@ -313,16 +285,14 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 					});
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"file_name" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "file_name" must be a string`
 						)
 					).to.be.false;
 				});
@@ -333,7 +303,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: 42,
@@ -341,9 +311,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"orientation" must be one of [any, natural, landscape, landscape-primary, landscape-secondary, portrait, portrait-primary, portrait-secondary]'
-							)}`
+							`gridsome-plugin-manifest: "orientation" must be a string`
 						)
 					).to.be.true;
 				});
@@ -352,7 +320,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "",
@@ -360,9 +328,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"orientation" must be one of [any, natural, landscape, landscape-primary, landscape-secondary, portrait, portrait-primary, portrait-secondary]'
-							)}`
+							`gridsome-plugin-manifest: "orientation" must be filled`
 						)
 					).to.be.true;
 				});
@@ -371,7 +337,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -379,9 +345,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"orientation" must be one of [any, natural, landscape, landscape-primary, landscape-secondary, portrait, portrait-primary, portrait-secondary]'
-							)}`
+							`gridsome-plugin-manifest: "orientation" must be one of [any,natural,landscape,landscape-primary,landscape-secondary,portrait,portrait-primary,portrait-secondary]`
 						)
 					).to.be.false;
 				});
@@ -392,7 +356,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -401,9 +365,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"scope" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "scope" must be a string`
 						)
 					).to.be.true;
 				});
@@ -412,7 +374,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -421,9 +383,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"scope" is not allowed to be empty'
-							)}`
+							`gridsome-plugin-manifest: "scope" must be filled`
 						)
 					).to.be.true;
 				});
@@ -432,7 +392,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -441,9 +401,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"scope" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "scope" must be a string`
 						)
 					).to.be.false;
 				});
@@ -454,7 +412,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -464,9 +422,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"short_name" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "short_name" must be a string`
 						)
 					).to.be.true;
 				});
@@ -475,7 +431,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -485,9 +441,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"short_name" is not allowed to be empty'
-							)}`
+							`gridsome-plugin-manifest: "short_name" must be filled`
 						)
 					).to.be.true;
 				});
@@ -496,7 +450,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -506,9 +460,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"short_name" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "short_name" must be a string`
 						)
 					).to.be.false;
 				});
@@ -519,7 +471,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -530,9 +482,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"start_url" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "start_url" must be a string`
 						)
 					).to.be.true;
 				});
@@ -541,7 +491,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -552,9 +502,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"start_url" is not allowed to be empty'
-							)}`
+							`gridsome-plugin-manifest: "start_url" must be filled`
 						)
 					).to.be.true;
 				});
@@ -563,7 +511,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -574,9 +522,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"start_url" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "start_url" must be a string`
 						)
 					).to.be.false;
 				});
@@ -587,7 +533,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -599,9 +545,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"theme_color" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "theme_color" must be a string`
 						)
 					).to.be.true;
 				});
@@ -610,7 +554,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -622,9 +566,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"theme_color" is not allowed to be empty'
-							)}`
+							`gridsome-plugin-manifest: "theme_color" must be filled`
 						)
 					).to.be.true;
 				});
@@ -633,7 +575,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -645,9 +587,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"theme_color" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "theme_color" must be a string`
 						)
 					).to.be.false;
 				});
@@ -658,7 +598,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -671,9 +611,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"dir" must be one of [ltr, rtl, auto]'
-							)}`
+							`gridsome-plugin-manifest: "dir" must be a string`
 						)
 					).to.be.true;
 				});
@@ -682,7 +620,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -695,9 +633,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"dir" must be one of [ltr, rtl, auto]'
-							)}`
+							`gridsome-plugin-manifest: "dir" must be filled`
 						)
 					).to.be.true;
 				});
@@ -706,7 +642,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -719,9 +655,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"dir" must be one of [ltr, rtl, auto]'
-							)}`
+							`gridsome-plugin-manifest: "dir" must be one of [ltr,rtl,auto]`
 						)
 					).to.be.false;
 				});
@@ -732,7 +666,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -746,9 +680,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"lang" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "lang" must be a string`
 						)
 					).to.be.true;
 				});
@@ -757,7 +689,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -771,9 +703,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"lang" is not allowed to be empty'
-							)}`
+							`gridsome-plugin-manifest: "lang" must be filled`
 						)
 					).to.be.true;
 				});
@@ -782,7 +712,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -796,9 +726,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"lang" must be a string'
-							)}`
+							`gridsome-plugin-manifest: "lang" must be a string`
 						)
 					).to.be.false;
 				});
@@ -809,7 +737,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -824,9 +752,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"prefer_related_applications" must be a boolean'
-							)}`
+							`gridsome-plugin-manifest: "prefer_related_applications" must be a boolean`
 						)
 					).to.be.true;
 				});
@@ -835,7 +761,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -850,9 +776,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"prefer_related_applications" must be a boolean'
-							)}`
+							`gridsome-plugin-manifest: "prefer_related_applications" must be a boolean`
 						)
 					).to.be.false;
 				});
@@ -863,7 +787,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -879,9 +803,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"related_applications" must be an array'
-							)}`
+							`gridsome-plugin-manifest: "related_applications" must be an array`
 						)
 					).to.be.true;
 				});
@@ -890,7 +812,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -906,9 +828,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"related_applications[0]" must be of type object'
-							)}`
+							`gridsome-plugin-manifest: "related_applications[0]" must be an object`
 						)
 					).to.be.true;
 				});
@@ -917,7 +837,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -938,40 +858,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"related_applications[0].platform" is required'
-							)}`
-						)
-					).to.be.true;
-				});
-
-				it("should print an error if related_applications option is an array of related applications with an empty platform key", () => {
-					new gridsomeServer(api, {
-						background_color: "#FFFFFF",
-						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
-						name: "Gridsome",
-						file_name: "manifest.json",
-						orientation: "portrait",
-						scope: "/",
-						short_name: "GRID",
-						start_url: "/",
-						theme_color: "#000000",
-						dir: "ltr",
-						lang: "en",
-						prefer_related_applications: true,
-						related_applications: [
-							{
-								platform: "",
-							},
-						],
-					});
-
-					expect(
-						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"related_applications[0].platform" is not allowed to be empty'
-							)}`
+							`gridsome-plugin-manifest: "related_applications[0].platform" must be present`
 						)
 					).to.be.true;
 				});
@@ -980,7 +867,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -1000,9 +887,38 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"related_applications[0].url" is required'
-							)}`
+							`gridsome-plugin-manifest: "related_applications[0].url" must be present`
+						)
+					).to.be.true;
+				});
+
+				it("should print an error if related_applications option is an array of related applications with an empty platform key", () => {
+					new gridsomeServer(api, {
+						background_color: "#FFFFFF",
+						display: "standalone",
+						icon_path: `${__dirname}/misc/logo.svg`,
+						name: "Gridsome",
+						file_name: "manifest.json",
+						orientation: "portrait",
+						scope: "/",
+						short_name: "GRID",
+						start_url: "/",
+						theme_color: "#000000",
+						dir: "ltr",
+						lang: "en",
+						prefer_related_applications: true,
+						related_applications: [
+							{
+								platform: "",
+								url:
+									"https://play.google.com/store/apps/details?id=com.example.app1",
+							},
+						],
+					});
+
+					expect(
+						console.error.calledWith(
+							`gridsome-plugin-manifest: "related_applications[0].platform" must be filled`
 						)
 					).to.be.true;
 				});
@@ -1011,7 +927,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -1032,9 +948,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"related_applications[0].url" is not allowed to be empty'
-							)}`
+							`gridsome-plugin-manifest: "related_applications[0].url" must be filled`
 						)
 					).to.be.true;
 				});
@@ -1043,7 +957,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -1059,8 +973,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"related_applications" must be a boolean'
+							`gridsome-plugin-manifest: "related_applications" must be an array'
 							)}`
 						)
 					).to.be.false;
@@ -1070,7 +983,7 @@ describe("server", () => {
 					new gridsomeServer(api, {
 						background_color: "#FFFFFF",
 						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
+						icon_path: `${__dirname}/misc/logo.svg`,
 						name: "Gridsome",
 						file_name: "manifest.json",
 						orientation: "portrait",
@@ -1092,43 +1005,7 @@ describe("server", () => {
 
 					expect(
 						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"related_applications[0].id" is required'
-							)}`
-						)
-					).to.be.false;
-				});
-
-				it("should not print an error if related_applications option is an array of a single related application with id key", () => {
-					new gridsomeServer(api, {
-						background_color: "#FFFFFF",
-						display: "standalone",
-						icon_path: "./src/assets/img/icon.png",
-						name: "Gridsome",
-						file_name: "manifest.json",
-						orientation: "portrait",
-						scope: "/",
-						short_name: "GRID",
-						start_url: "/",
-						theme_color: "#000000",
-						dir: "ltr",
-						lang: "en",
-						prefer_related_applications: true,
-						related_applications: [
-							{
-								platform: "play",
-								url:
-									"https://play.google.com/store/apps/details?id=com.example.app1",
-								id: "com.example.app1",
-							},
-						],
-					});
-
-					expect(
-						console.error.calledWith(
-							`gridsome-plugin-manifest: ${red(
-								'"related_applications[0].id" is not allowed'
-							)}`
+							`gridsome-plugin-manifest: "related_applications[0].id" is required`
 						)
 					).to.be.false;
 				});
@@ -1137,6 +1014,8 @@ describe("server", () => {
 
 		describe("behavior", () => {
 			it("should create the folders static/assets/img if they do not exists", async () => {
+				await sleep(200);
+
 				new gridsomeServer(api, {
 					background_color: "#FFFFFF",
 					display: "standalone",

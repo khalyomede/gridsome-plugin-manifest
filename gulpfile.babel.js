@@ -5,7 +5,7 @@ import typescript from "gulp-typescript";
 import tslint from "gulp-tslint";
 
 const js = () =>
-	src(["src/gridsome.{server,client}.ts", "src/error-logger.ts"])
+	src("src/gridsome.{server,client}.ts")
 		.pipe(plumber())
 		.pipe(tslint())
 		.pipe(typescript())

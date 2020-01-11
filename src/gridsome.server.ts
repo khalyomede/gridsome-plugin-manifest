@@ -1,82 +1,38 @@
-import * as Joi from "@hapi/joi";
 import { existsSync, writeFileSync } from "fs";
 import * as mime from "mime-types";
 import { sync } from "mkdirp";
 import { basename } from "path";
 import * as rename from "rename";
 import * as sharp from "sharp";
-import errorLogger from "./error-logger";
 import IOptions from "./IOptions";
 import IPluginAPI from "./IPluginAPI";
 
 class GridsomePluginManifest {
+	static readonly pluginName = "gridsome-plugin-manifest";
+
+	private readonly _options: IOptions;
+
 	public constructor(api: IPluginAPI, options: IOptions) {
+		this._options = options;
+
 		api.beforeBuild(async () => {
 			/* tslint:disable:no-console */
 			console.time("gridsome-plugin-manifest");
 			/* tslint:enable:no-console */
 
-			const { error } = Joi.object({
-				background_color: Joi.string().required(),
-				display: Joi.string()
-					.required()
-					.valid("standalone", "minimal-ui", "fullscreen"),
-				icon_path: Joi.string().required(),
-				name: Joi.string().required(),
-				file_name: Joi.string().required(),
-				orientation: Joi.string()
-					.required()
-					.valid(
-						"any",
-						"natural",
-						"landscape",
-						"landscape-primary",
-						"landscape-secondary",
-						"portrait",
-						"portrait-primary",
-						"portrait-secondary"
-					),
-				scope: Joi.string().required(),
-				short_name: Joi.string().required(),
-				start_url: Joi.string().required(),
-				theme_color: Joi.string().required(),
-				dir: Joi.string()
-					.required()
-					.valid("ltr", "rtl", "auto"),
-				lang: Joi.string().required(),
-				prefer_related_applications: Joi.bool()
-					.strict()
-					.required(),
-				related_applications: Joi.array()
-					.items(
-						Joi.object({
-							platform: Joi.string().required(),
-							url: Joi.string().required(),
-							id: Joi.string(),
-						})
-					)
-					.required(),
-			}).validate(options);
-
-			if (error instanceof Error) {
-				errorLogger(error.message);
-
-				/* tslint:disable:no-console */
-				console.timeEnd("gridsome-plugin-manifest");
-				/* tslint:enable:no-console */
-
-				return;
-			}
-
-			if (
-				options.icon_path === undefined ||
-				!existsSync(options.icon_path)
-			) {
-				errorLogger(`"icon_path" should target an existing file`);
-
-				/* tslint:disable:no-console */
-				console.timeEnd("gridsome-plugin-manifest");
-				/* tslint:enable:no-console */
+			try {
+				this._checkOptions();
+			} catch (exception) {
+				if (exception instanceof TypeError) {
+					/* tslint:disable:no-console */
+					console.error(
+						`${GridsomePluginManifest.pluginName}: ${exception.message}`
+					);
+					console.timeEnd(GridsomePluginManifest.pluginName);
+					/* tslint:enable:no-console */
+				} else {
+					throw exception;
+				}
 
 				return;
 			}
@@ -190,6 +146,281 @@ class GridsomePluginManifest {
 			prefer_related_applications: false,
 			related_applications: [],
 		};
+	}
+
+	private _checkOptions(): void {
+		this._checkBackgroundColorOption();
+		this._checkDisplayOption();
+		this._checkIconPathOption();
+		this._checkNameOption();
+		this._checkFileNameOption();
+		this._checkOrientationOption();
+		this._checkScopeOption();
+		this._checkShortNameOption();
+		this._checkStartUrlOption();
+		this._checkThemeColorOption();
+		this._checkDirOption();
+		this._checkLangOption();
+		this._checkPreferRelatedApplicationsOption();
+		this._checkRelatedApplicationsOption();
+	}
+
+	private _throwIfOptionMissing(optionName: string): void {
+		if (!(optionName in this._options)) {
+			throw new TypeError(`"${optionName}" must be present`);
+		}
+	}
+
+	private _throwIfOptionNotString(optionName: string): void {
+		if (typeof this._options[optionName] !== "string") {
+			throw new TypeError(`"${optionName}" must be a string`);
+		}
+	}
+
+	private _throwIfOptionNotFilledString(optionName: string): void {
+		if (this._options[optionName].length === 0) {
+			throw new TypeError(`"${optionName}" must be filled`);
+		}
+	}
+
+	private _throwIfOptionNotOneOf(
+		optionName: string,
+		allowedValues: Array<string>
+	): void {
+		if (!allowedValues.includes(this._options[optionName])) {
+			throw new TypeError(
+				`"${optionName}" must be one of [${allowedValues.toString()}]`
+			);
+		}
+	}
+
+	private _checkBackgroundColorOption(): void {
+		const optionName = "background_color";
+
+		this._throwIfOptionMissing(optionName);
+		this._throwIfOptionNotString(optionName);
+		this._throwIfOptionNotFilledString(optionName);
+
+		/**
+		 * @todo check if value if a valid hex color
+		 */
+	}
+
+	private _checkDisplayOption(): void {
+		const optionName = "display";
+
+		this._throwIfOptionMissing(optionName);
+		this._throwIfOptionNotString(optionName);
+		this._throwIfOptionNotFilledString(optionName);
+		this._throwIfOptionNotOneOf(optionName, [
+			"standalone",
+			"minimal-ui",
+			"fullscreen",
+		]);
+	}
+
+	private _checkIconPathOption(): void {
+		const optionName = "icon_path";
+
+		this._throwIfOptionMissing(optionName);
+		this._throwIfOptionNotString(optionName);
+		this._throwIfOptionNotFilledString(optionName);
+
+		if (
+			this._options.icon_path !== undefined &&
+			!existsSync(this._options.icon_path)
+		) {
+			throw new TypeError(`"${optionName}" must target an existing file`);
+		}
+	}
+
+	private _checkNameOption(): void {
+		const optionName = "name";
+
+		this._throwIfOptionMissing(optionName);
+		this._throwIfOptionNotString(optionName);
+		this._throwIfOptionNotFilledString(optionName);
+	}
+
+	private _checkFileNameOption(): void {
+		const optionName = "file_name";
+
+		this._throwIfOptionMissing(optionName);
+		this._throwIfOptionNotString(optionName);
+		this._throwIfOptionNotFilledString(optionName);
+	}
+
+	private _checkOrientationOption(): void {
+		const optionName = "orientation";
+
+		this._throwIfOptionMissing(optionName);
+		this._throwIfOptionNotString(optionName);
+		this._throwIfOptionNotFilledString(optionName);
+		this._throwIfOptionNotOneOf(optionName, [
+			"any",
+			"natural",
+			"landscape",
+			"landscape - primary",
+			"landscape - secondary",
+			"portrait",
+			"portrait - primary",
+			"portrait - secondary",
+		]);
+	}
+
+	private _checkScopeOption(): void {
+		const optionName = "scope";
+
+		this._throwIfOptionMissing(optionName);
+		this._throwIfOptionNotString(optionName);
+		this._throwIfOptionNotFilledString(optionName);
+
+		/**
+		 * @todo check if value is a valid absolute path
+		 */
+	}
+
+	private _checkShortNameOption(): void {
+		const optionName = "short_name";
+
+		this._throwIfOptionMissing(optionName);
+		this._throwIfOptionNotString(optionName);
+		this._throwIfOptionNotFilledString(optionName);
+	}
+
+	private _checkStartUrlOption(): void {
+		const optionName = "start_url";
+
+		this._throwIfOptionMissing(optionName);
+		this._throwIfOptionNotString(optionName);
+		this._throwIfOptionNotFilledString(optionName);
+
+		/**
+		 * @todo checj if value is a valid absolute path
+		 */
+	}
+
+	private _checkThemeColorOption(): void {
+		const optionName = "theme_color";
+
+		this._throwIfOptionMissing(optionName);
+		this._throwIfOptionNotString(optionName);
+		this._throwIfOptionNotFilledString(optionName);
+
+		/**
+		 * @todo check if value is a valid hex color
+		 */
+	}
+
+	private _checkDirOption(): void {
+		const optionName = "dir";
+
+		this._throwIfOptionMissing(optionName);
+		this._throwIfOptionNotString(optionName);
+		this._throwIfOptionNotFilledString(optionName);
+		this._throwIfOptionNotOneOf(optionName, ["ltr", "rtl", "auto"]);
+	}
+
+	private _checkLangOption(): void {
+		const optionName = "lang";
+
+		this._throwIfOptionMissing(optionName);
+		this._throwIfOptionNotString(optionName);
+		this._throwIfOptionNotFilledString(optionName);
+
+		/**
+		 * @todo check if value is a valid ISO 2 lang
+		 */
+	}
+
+	private _checkPreferRelatedApplicationsOption(): void {
+		const optionName = "prefer_related_applications";
+
+		this._throwIfOptionMissing(optionName);
+
+		if (typeof this._options.prefer_related_applications !== "boolean") {
+			throw new TypeError(`"${optionName}" must be a boolean`);
+		}
+	}
+
+	private _checkRelatedApplicationsOption(): void {
+		const optionName = "related_applications";
+
+		this._throwIfOptionMissing(optionName);
+
+		if (!Array.isArray(this._options.related_applications)) {
+			throw new TypeError(`"${optionName}" must be an array`);
+		}
+
+		const numberOfRelatedApplications = this._options.related_applications
+			.length;
+
+		for (let index = 0; index < numberOfRelatedApplications; index++) {
+			const relatedApplication = this._options.related_applications[
+				index
+			];
+
+			if (!(relatedApplication instanceof Object)) {
+				throw new TypeError(
+					`"${optionName}[${index}]" must be an object`
+				);
+			}
+
+			if (!("platform" in relatedApplication)) {
+				throw new TypeError(
+					`"${optionName}[${index}].platform" must be present`
+				);
+			}
+
+			if (!("url" in relatedApplication)) {
+				throw new TypeError(
+					`"${optionName}[${index}].url" must be present`
+				);
+			}
+
+			if (typeof relatedApplication.platform !== "string") {
+				throw new TypeError(
+					`"${optionName}[${index}].platform" must be a string`
+				);
+			}
+
+			if (typeof relatedApplication.url !== "string") {
+				throw new TypeError(
+					`"${optionName}[${index}].url" must be a string`
+				);
+			}
+
+			if (
+				"id" in relatedApplication &&
+				typeof relatedApplication.id !== "string"
+			) {
+				throw new TypeError(
+					`"${optionName}[${index}].id" must be a string`
+				);
+			}
+
+			if (relatedApplication.platform.length === 0) {
+				throw new TypeError(
+					`"${optionName}[${index}].platform" must be filled`
+				);
+			}
+
+			if (relatedApplication.url.length === 0) {
+				throw new TypeError(
+					`"${optionName}[${index}].url" must be filled`
+				);
+			}
+
+			if (
+				"id" in relatedApplication &&
+				typeof relatedApplication.id === "string" &&
+				relatedApplication.id.length === 0
+			) {
+				throw new TypeError(
+					`"${optionName}[${index}].id" must be filled`
+				);
+			}
+		}
 	}
 }
 

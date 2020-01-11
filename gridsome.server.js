@@ -143,8 +143,6 @@ var __generator = void 0 && (void 0).__generator || function (thisArg, body) {
   }
 };
 
-var Joi = require("@hapi/joi");
-
 var fs_1 = require("fs");
 
 var mime = require("mime-types");
@@ -157,49 +155,29 @@ var rename = require("rename");
 
 var sharp = require("sharp");
 
-var error_logger_1 = require("./error-logger");
-
 var GridsomePluginManifest = function () {
   function GridsomePluginManifest(api, options) {
     var _this = this;
 
+    this._options = options;
     api.beforeBuild(function () {
       return __awaiter(_this, void 0, void 0, function () {
-        var error, iconFileName, iconFileName512, iconFileName192, iconFileName144, iconFileName96, iconFileName72, iconFileName48, mimeType;
+        var iconFileName, iconFileName512, iconFileName192, iconFileName144, iconFileName96, iconFileName72, iconFileName48, mimeType;
         return __generator(this, function (_a) {
           switch (_a.label) {
             case 0:
               console.time("gridsome-plugin-manifest");
-              error = Joi.object({
-                background_color: Joi.string().required(),
-                display: Joi.string().required().valid("standalone", "minimal-ui", "fullscreen"),
-                icon_path: Joi.string().required(),
-                name: Joi.string().required(),
-                file_name: Joi.string().required(),
-                orientation: Joi.string().required().valid("any", "natural", "landscape", "landscape-primary", "landscape-secondary", "portrait", "portrait-primary", "portrait-secondary"),
-                scope: Joi.string().required(),
-                short_name: Joi.string().required(),
-                start_url: Joi.string().required(),
-                theme_color: Joi.string().required(),
-                dir: Joi.string().required().valid("ltr", "rtl", "auto"),
-                lang: Joi.string().required(),
-                prefer_related_applications: Joi.bool().strict().required(),
-                related_applications: Joi.array().items(Joi.object({
-                  platform: Joi.string().required(),
-                  url: Joi.string().required(),
-                  id: Joi.string()
-                })).required()
-              }).validate(options).error;
 
-              if (error instanceof Error) {
-                error_logger_1["default"](error.message);
-                console.timeEnd("gridsome-plugin-manifest");
-                return [2];
-              }
+              try {
+                this._checkOptions();
+              } catch (exception) {
+                if (exception instanceof TypeError) {
+                  console.error(GridsomePluginManifest.pluginName + ": " + exception.message);
+                  console.timeEnd(GridsomePluginManifest.pluginName);
+                } else {
+                  throw exception;
+                }
 
-              if (options.icon_path === undefined || !fs_1.existsSync(options.icon_path)) {
-                error_logger_1["default"]("\"icon_path\" should target an existing file");
-                console.timeEnd("gridsome-plugin-manifest");
                 return [2];
               }
 
@@ -284,6 +262,253 @@ var GridsomePluginManifest = function () {
     };
   };
 
+  GridsomePluginManifest.prototype._checkOptions = function () {
+    this._checkBackgroundColorOption();
+
+    this._checkDisplayOption();
+
+    this._checkIconPathOption();
+
+    this._checkNameOption();
+
+    this._checkFileNameOption();
+
+    this._checkOrientationOption();
+
+    this._checkScopeOption();
+
+    this._checkShortNameOption();
+
+    this._checkStartUrlOption();
+
+    this._checkThemeColorOption();
+
+    this._checkDirOption();
+
+    this._checkLangOption();
+
+    this._checkPreferRelatedApplicationsOption();
+
+    this._checkRelatedApplicationsOption();
+  };
+
+  GridsomePluginManifest.prototype._throwIfOptionMissing = function (optionName) {
+    if (!(optionName in this._options)) {
+      throw new TypeError("\"" + optionName + "\" must be present");
+    }
+  };
+
+  GridsomePluginManifest.prototype._throwIfOptionNotString = function (optionName) {
+    if (typeof this._options[optionName] !== "string") {
+      throw new TypeError("\"" + optionName + "\" must be a string");
+    }
+  };
+
+  GridsomePluginManifest.prototype._throwIfOptionNotFilledString = function (optionName) {
+    if (this._options[optionName].length === 0) {
+      throw new TypeError("\"" + optionName + "\" must be filled");
+    }
+  };
+
+  GridsomePluginManifest.prototype._throwIfOptionNotOneOf = function (optionName, allowedValues) {
+    if (!allowedValues.includes(this._options[optionName])) {
+      throw new TypeError("\"" + optionName + "\" must be one of [" + allowedValues.toString() + "]");
+    }
+  };
+
+  GridsomePluginManifest.prototype._checkBackgroundColorOption = function () {
+    var optionName = "background_color";
+
+    this._throwIfOptionMissing(optionName);
+
+    this._throwIfOptionNotString(optionName);
+
+    this._throwIfOptionNotFilledString(optionName);
+  };
+
+  GridsomePluginManifest.prototype._checkDisplayOption = function () {
+    var optionName = "display";
+
+    this._throwIfOptionMissing(optionName);
+
+    this._throwIfOptionNotString(optionName);
+
+    this._throwIfOptionNotFilledString(optionName);
+
+    this._throwIfOptionNotOneOf(optionName, ["standalone", "minimal-ui", "fullscreen"]);
+  };
+
+  GridsomePluginManifest.prototype._checkIconPathOption = function () {
+    var optionName = "icon_path";
+
+    this._throwIfOptionMissing(optionName);
+
+    this._throwIfOptionNotString(optionName);
+
+    this._throwIfOptionNotFilledString(optionName);
+
+    if (this._options.icon_path !== undefined && !fs_1.existsSync(this._options.icon_path)) {
+      throw new TypeError("\"" + optionName + "\" must target an existing file");
+    }
+  };
+
+  GridsomePluginManifest.prototype._checkNameOption = function () {
+    var optionName = "name";
+
+    this._throwIfOptionMissing(optionName);
+
+    this._throwIfOptionNotString(optionName);
+
+    this._throwIfOptionNotFilledString(optionName);
+  };
+
+  GridsomePluginManifest.prototype._checkFileNameOption = function () {
+    var optionName = "file_name";
+
+    this._throwIfOptionMissing(optionName);
+
+    this._throwIfOptionNotString(optionName);
+
+    this._throwIfOptionNotFilledString(optionName);
+  };
+
+  GridsomePluginManifest.prototype._checkOrientationOption = function () {
+    var optionName = "orientation";
+
+    this._throwIfOptionMissing(optionName);
+
+    this._throwIfOptionNotString(optionName);
+
+    this._throwIfOptionNotFilledString(optionName);
+
+    this._throwIfOptionNotOneOf(optionName, ["any", "natural", "landscape", "landscape - primary", "landscape - secondary", "portrait", "portrait - primary", "portrait - secondary"]);
+  };
+
+  GridsomePluginManifest.prototype._checkScopeOption = function () {
+    var optionName = "scope";
+
+    this._throwIfOptionMissing(optionName);
+
+    this._throwIfOptionNotString(optionName);
+
+    this._throwIfOptionNotFilledString(optionName);
+  };
+
+  GridsomePluginManifest.prototype._checkShortNameOption = function () {
+    var optionName = "short_name";
+
+    this._throwIfOptionMissing(optionName);
+
+    this._throwIfOptionNotString(optionName);
+
+    this._throwIfOptionNotFilledString(optionName);
+  };
+
+  GridsomePluginManifest.prototype._checkStartUrlOption = function () {
+    var optionName = "start_url";
+
+    this._throwIfOptionMissing(optionName);
+
+    this._throwIfOptionNotString(optionName);
+
+    this._throwIfOptionNotFilledString(optionName);
+  };
+
+  GridsomePluginManifest.prototype._checkThemeColorOption = function () {
+    var optionName = "theme_color";
+
+    this._throwIfOptionMissing(optionName);
+
+    this._throwIfOptionNotString(optionName);
+
+    this._throwIfOptionNotFilledString(optionName);
+  };
+
+  GridsomePluginManifest.prototype._checkDirOption = function () {
+    var optionName = "dir";
+
+    this._throwIfOptionMissing(optionName);
+
+    this._throwIfOptionNotString(optionName);
+
+    this._throwIfOptionNotFilledString(optionName);
+
+    this._throwIfOptionNotOneOf(optionName, ["ltr", "rtl", "auto"]);
+  };
+
+  GridsomePluginManifest.prototype._checkLangOption = function () {
+    var optionName = "lang";
+
+    this._throwIfOptionMissing(optionName);
+
+    this._throwIfOptionNotString(optionName);
+
+    this._throwIfOptionNotFilledString(optionName);
+  };
+
+  GridsomePluginManifest.prototype._checkPreferRelatedApplicationsOption = function () {
+    var optionName = "prefer_related_applications";
+
+    this._throwIfOptionMissing(optionName);
+
+    if (typeof this._options.prefer_related_applications !== "boolean") {
+      throw new TypeError("\"" + optionName + "\" must be a boolean");
+    }
+  };
+
+  GridsomePluginManifest.prototype._checkRelatedApplicationsOption = function () {
+    var optionName = "related_applications";
+
+    this._throwIfOptionMissing(optionName);
+
+    if (!Array.isArray(this._options.related_applications)) {
+      throw new TypeError("\"" + optionName + "\" must be an array");
+    }
+
+    var numberOfRelatedApplications = this._options.related_applications.length;
+
+    for (var index = 0; index < numberOfRelatedApplications; index++) {
+      var relatedApplication = this._options.related_applications[index];
+
+      if (!(relatedApplication instanceof Object)) {
+        throw new TypeError("\"" + optionName + "[" + index + "]\" must be an object");
+      }
+
+      if (!("platform" in relatedApplication)) {
+        throw new TypeError("\"" + optionName + "[" + index + "].platform\" must be present");
+      }
+
+      if (!("url" in relatedApplication)) {
+        throw new TypeError("\"" + optionName + "[" + index + "].url\" must be present");
+      }
+
+      if (typeof relatedApplication.platform !== "string") {
+        throw new TypeError("\"" + optionName + "[" + index + "].platform\" must be a string");
+      }
+
+      if (typeof relatedApplication.url !== "string") {
+        throw new TypeError("\"" + optionName + "[" + index + "].url\" must be a string");
+      }
+
+      if ("id" in relatedApplication && typeof relatedApplication.id !== "string") {
+        throw new TypeError("\"" + optionName + "[" + index + "].id\" must be a string");
+      }
+
+      if (relatedApplication.platform.length === 0) {
+        throw new TypeError("\"" + optionName + "[" + index + "].platform\" must be filled");
+      }
+
+      if (relatedApplication.url.length === 0) {
+        throw new TypeError("\"" + optionName + "[" + index + "].url\" must be filled");
+      }
+
+      if ("id" in relatedApplication && typeof relatedApplication.id === "string" && relatedApplication.id.length === 0) {
+        throw new TypeError("\"" + optionName + "[" + index + "].id\" must be filled");
+      }
+    }
+  };
+
+  GridsomePluginManifest.pluginName = "gridsome-plugin-manifest";
   return GridsomePluginManifest;
 }();
 
