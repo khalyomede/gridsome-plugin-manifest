@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+-   Bug when upgrading the dependencies would cause Sharp to be built twice, on differents version, leading to libvips to not be usable by the plugin. Now, the version of sharp has been corrected to not produce 2 installation of Sharp.
+
 ## [0.3.3] 2020-01-12
 
 ### Fixed
