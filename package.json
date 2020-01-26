@@ -36,7 +36,7 @@
 		"npm-check-updates": "4.*",
 		"nyc": "15.*",
 		"sinon": "8.*",
-		"tslint": "5.*",
+		"tslint": "6.*",
 		"typescript": "3.*",
 		"yarn": "^1.21.1"
 	},
@@ -53,7 +53,7 @@
 	"dependencies": {
 		"is-hexcolor": "1.*",
 		"mime-types": "2.*",
-		"mkdirp": "0.*",
+		"mkdirp": "1.*",
 		"rename": "1.*",
 		"sharp": "0.*"
 	},
