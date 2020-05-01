@@ -19,7 +19,7 @@
 		"@babel/register": "7.*",
 		"@babel/runtime": "7.*",
 		"@types/mime-types": "2.*",
-		"@types/mkdirp": "0.*",
+		"@types/mkdirp": "1.*",
 		"@types/node": "13.*",
 		"@types/rename": "1.*",
 		"@types/sharp": "0.*",
@@ -32,13 +32,12 @@
 		"gulp-typescript": "5.*",
 		"mocha": "7.*",
 		"mocha-sinon": "2.*",
-		"np": "5.*",
+		"np": "6.*",
 		"npm-check-updates": "4.*",
 		"nyc": "15.*",
-		"sinon": "8.*",
+		"sinon": "9.*",
 		"tslint": "6.*",
-		"typescript": "3.*",
-		"yarn": "^1.21.1"
+		"typescript": "3.*"
 	},
 	"peerDependencies": {
 		"gridsome": "0.*"
