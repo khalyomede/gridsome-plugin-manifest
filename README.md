@@ -6,15 +6,15 @@ Generates a manifest and handle icons generation for your PWA.
 
 ## Summary
 
--   [About](#about)
--   [Features](#features)
--   [Requirements](#requirements)
--   [Installation](#installation)
--   [Usage](#usage)
--   [Changelog](CHANGELOG.md)
--   [API](#api)
--   [Known issues](#known-issues)
--   [Run the tests](#run-the-tests)
+- [About](#about)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Changelog](CHANGELOG.md)
+- [API](#api)
+- [Known issues](#known-issues)
+- [Run the tests](#run-the-tests)
 
 ## About
 
@@ -22,13 +22,13 @@ I made this plugin because I use gridsome to make my next web app, and I wanted 
 
 ## Features
 
--   Generates a `manifest.json` at the root of your dist folder at build time
--   Automatically generates 512, 192, 144, 98, 72, and 48px wide icons from your original icon
--   Adds a `<meta name="theme-color" />` and a `<link rel="manifest" />` (at build time) at the head of each of your HTML files
+- Generates a `manifest.json` at the root of your dist folder at build time
+- Automatically generates 512, 192, 144, 98, 72, and 48px wide icons from your original icon
+- Adds a `<meta name="theme-color" />` and a `<link rel="manifest" />` (at build time) at the head of each of your HTML files
 
 ## Requirements
 
--   NPM or Yarn installed on your machine
+- NPM or Yarn installed on your machine
 
 ## Installation
 
@@ -50,27 +50,27 @@ In your file `gridsome.config.js`, add the following in the `plugin` key:
 
 ```javascript
 module.exports = {
-	siteName: "Gridsome",
-	plugins: [
-		{
-			use: "gridsome-plugin-manifest",
-			options: {
-				background_color: "#000000",
-				icon_path: "./src/assets/img/icon.png",
-				name: "My app name",
-				short_name: "App",
-				theme_color: "#FFFFFF",
-				lang: "en",
-			},
-		},
-	],
+  siteName: "Gridsome",
+  plugins: [
+    {
+      use: "gridsome-plugin-manifest",
+      options: {
+        background_color: "#000000",
+        icon_path: "./src/assets/img/icon.png",
+        name: "My app name",
+        short_name: "App",
+        theme_color: "#FFFFFF",
+        lang: "en",
+      },
+    },
+  ],
 };
 ```
 
 Build your project:
 
--   With NPM: `npm run build`
--   With Yarn: `yarn build`
+- With NPM: `npm run build`
+- With Yarn: `yarn build`
 
 To check it work, serve your application locally, then use Chrome DevTools to run a check on the PWA "manifest" test to check it has successfuly taken your manifest file into account.
 
@@ -78,26 +78,26 @@ To check it work, serve your application locally, then use Chrome DevTools to ru
 
 ## API
 
--   Options
-    -   **background_color**: `String` The background of your PWA loading screen
-    -   **name**: `String` The name displayed in your PWA loading screen
-    -   **theme_color**: `String` The color of the text in your PWA loading screen
-    -   **display**: `standalone` | `minimal-ui` | `fullscreen` (default: `minimal-ui`)
-    -   **scope**: `String` The scope of your PWA (should be an absolute URL)
-    -   **orientation**: `any` | `natural` | `landscape` | `landscape-primary` | `landscape-secondary` | `portrait` | `portrait-primary` | `portrait-secondary` (default: `any`)
-    -   **start_url**: `String` The URL where the user will begin if he/she starts your PWA
-    -   **file_name**: `String` The name of your manifest file (default: `manifest.json`)
-    -   **icon_path**: `String` The path (include the file name) where your icon is stored at
-    -   **dir**: `ltr` | `rtl` | `auto` The direction of the text (default: `auto`)
-    -   **lang**: `String` An ISO 2 lang code to determine which lang the `name` and `short_name` are displayed on.
-    -   **prefer_related_applications**: `Boolean` Whether to prompt to open any link with another app than this PWA or not (default: `false`).
-    -   **related_applications**: `Array<RelatedApplication>`: A list of the related applications (see below for the prototype of a `RelatedApplication`).
+- Options
+  - **background_color**: `String` The background of your PWA loading screen
+  - **name**: `String` The name displayed in your PWA loading screen
+  - **theme_color**: `String` The color of the text in your PWA loading screen
+  - **display**: `standalone` | `minimal-ui` | `fullscreen` (default: `minimal-ui`)
+  - **scope**: `String` The scope of your PWA (should be an absolute URL)
+  - **orientation**: `any` | `natural` | `landscape` | `landscape-primary` | `landscape-secondary` | `portrait` | `portrait-primary` | `portrait-secondary` (default: `any`)
+  - **start_url**: `String` The URL where the user will begin if he/she starts your PWA
+  - **file_name**: `String` The name of your manifest file (default: `manifest.json`)
+  - **icon_path**: `String` The path (include the file name) where your icon is stored at
+  - **dir**: `ltr` | `rtl` | `auto` The direction of the text (default: `auto`)
+  - **lang**: `String` An ISO 2 lang code to determine which lang the `name` and `short_name` are displayed on.
+  - **prefer_related_applications**: `Boolean` Whether to prompt to open any link with another app than this PWA or not (default: `false`).
+  - **related_applications**: `Array<RelatedApplication>`: A list of the related applications (see below for the prototype of a `RelatedApplication`).
 
 ```typescript
 interface RelatedApplication {
-	platform: string;
-	url: string;
-	id?: string;
+  platform: string;
+  url: string;
+  id?: string;
 }
 ```
 
@@ -105,17 +105,17 @@ _(`?:` means "non mandatory field")._
 
 ## Known issues
 
--   The icon **must** be square (the size that is used in the `icons` key of the `manifest.json` file is for the moment `width x width`, so for example a width of `512` will produce a `sizes` key equal to `512x512`)
+- The icon **must** be square (the size that is used in the `icons` key of the `manifest.json` file is for the moment `width x width`, so for example a width of `512` will produce a `sizes` key equal to `512x512`)
 
 ## Run the tests
 
 1. Clone the project: `git clone https://github.com/khalyomede/gridsome-plugin-manifest`
 2. Install the dependencies
-    - with NPM: `npm install`
-    - with Yarn: `yarn install`
+   - with NPM: `npm install`
+   - with Yarn: `yarn install`
 3. Run the tests
-    - with NPM: `npm run test`
-    - with Yarn: `yarn test`
+   - with NPM: `npm run test`
+   - with Yarn: `yarn test`
 
 You should see something like:
 
