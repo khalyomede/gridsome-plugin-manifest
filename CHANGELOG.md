@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.5] 2020-06-08
+
+### Fixed
+
+- Bug when sharp^0.24.0 would prevent the plugin to run because of an error about the file type (thank you both @vergissberlin for you PR #7 and @Kulcanhez for reporting the issue).
+
 ## [0.3.4] 2020-01-26
 
 ### Fixed
